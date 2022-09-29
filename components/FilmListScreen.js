@@ -7,12 +7,11 @@ import {
 } from 'react-native' 
 import { FlatList } from 'react-native-gesture-handler';
 import Films from '../assets/films.json';
-import { Input } from '@ui-kitten/components';
+import { Searchbar } from 'react-native-paper';
 
 export default function FilmListScreen({ navigation }) {
     return (
         <View style={styles.container}>
-            <Text style={styles.mainTitle} >Films</Text>
             <FlatList 
                 data={Films}
                 renderItem={ ({item}) => (
@@ -27,53 +26,29 @@ export default function FilmListScreen({ navigation }) {
                     </TouchableOpacity>
                 )}
                 ItemSeparatorComponent={renderSeparator}
-                ListHeaderComponent={renderHeader}
+                ListHeaderComponent={listHeader}
             />
         </View>
     );
 }
 
-const state = {
-    loading: false,      
-    data: [],      
-    error: null,    
+const listHeader = () => {
+    const [searchQuery, setSearchQuery] = React.useState('');
+  
+    const onChangeSearch = query => setSearchQuery(query);
+  
+    return (
+        <View style={styles.container}>
+            <Text style={styles.mainTitle} >Films</Text>
+            <Searchbar
+                placeholder="Search"
+                onChangeText={onChangeSearch}
+                value={searchQuery}
+                onIconPress={() => navigation.navigate("HomeScreen")}
+            />
+        </View>
+    );
 };
-
-searchFilterFunction = text => {    
-    const newData = this.arrayholder.filter(item => {      
-    const itemData = `${item.name.title.toUpperCase()}   
-    ${item.name.first.toUpperCase()} ${item.name.last.toUpperCase()}`;
-    
-    const textData = text.toUpperCase();
-    
-    return itemData.indexOf(textData) > -1;    
-});
-
-this.setState({ data: newData });  
-};
-
-const renderHeader = () => (
-    <View
-      style={{
-        backgroundColor: '#fff',
-        padding: 10,
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-      <Input
-        autoCapitalize='none'
-        autoCorrect={false}
-        status='info'
-        placeholder='Search'
-        style={{
-          borderRadius: 25,
-          borderColor: '#333',
-          backgroundColor: '#fff'
-        }}
-        textStyle={{ color: '#000' }}
-      />
-    </View>
-  )
 
 const renderSeparator = () => {
     return (
@@ -81,7 +56,7 @@ const renderSeparator = () => {
         style={styles.renderSeparator}
       />
     )
-  }
+}
   
 
 const styles = StyleSheet.create({
