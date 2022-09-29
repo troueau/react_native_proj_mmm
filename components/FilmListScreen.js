@@ -8,6 +8,7 @@ import {
 import { FlatList } from 'react-native-gesture-handler';
 import Films from '../assets/films.json';
 import { Searchbar } from 'react-native-paper';
+import Icon from "react-native-vector-icons/Ionicons";
 
 export default class App extends Component {
     constructor(props) {
@@ -63,6 +64,33 @@ export default class App extends Component {
             </View>
         )
     }
+
+    renderItem({item, navigation}) {
+        return (
+          <View style={styles.listItem}>
+            <Icon
+                name="image-outline"
+                color="#007AFF"
+                size={50}
+            />
+            <View style={{alignItems:"center",flex:1}}>
+              <Text style={{fontWeight:"bold"}}>{item.Title}</Text>
+              <Text>{item.Year}</Text>
+              <Text>{item.Director}</Text>
+            </View>
+            <TouchableOpacity 
+                style={{height:50,width:50, justifyContent:"center",alignItems:"center"}}
+                onPress={() => navigation.navigate("FilmDetailsScreen", {item: item})}>
+                <Icon
+                    name="chevron-forward-outline"
+                    color="black"
+                    size={40}
+                    style={{width:30, height:40,borderRadius:40}}
+                />
+            </TouchableOpacity>
+          </View>
+        );
+      }
   
     render() {
         const navigation = this.props.navigation;
@@ -71,18 +99,9 @@ export default class App extends Component {
             <FlatList
                 data={this.state.data}
                 renderItem={({ item }) => (
-                    <TouchableOpacity onPress={() => navigation.navigate("FilmDetailsScreen", {item: item})}>
-                        <View style={styles.filmContainer}>
-                            <Text style={styles.primaryText}>
-                            {item.Title} - {item.Year}
-                            </Text>
-                            <Text>Director : {item.Director}</Text>
-                            <Text>Genre : {item.Actors}</Text>
-                        </View>
-                    </TouchableOpacity>
+                    <this.renderItem item={item} navigation={navigation}/>
                 )}
                 keyExtractor={item => item.Title}
-                ItemSeparatorComponent={this.renderSeparator}
                 ListHeaderComponent={this.renderHeader}
             />
             </View>
@@ -94,9 +113,6 @@ export default class App extends Component {
   
 
 const styles = StyleSheet.create({
-    container: {
-        display: "flex",
-    },
     renderSeparator: {
         height: 1,
         width: '86%',
@@ -119,5 +135,19 @@ const styles = StyleSheet.create({
     searchBar: {
         marginBottom: 20, 
         marginHorizontal:8,
+    },
+    container: {
+        flex: 1,
+        backgroundColor: '#F7F7F7',
+      },
+    listItem: {
+        margin:8,
+        padding:10,
+        backgroundColor:"#FFF",
+        width:"95%",
+        flex:1,
+        alignSelf:"center",
+        flexDirection:"row",
+        borderRadius:5
     }
 })
