@@ -30,9 +30,7 @@ export default function FilmDetailsScreen({navigation, route}) {
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    justifyContent: "space-around",
-    justifyContent: "center",
-    alignItems: 'center',
+    padding: 10,
   },
   filmContainer: {
     padding: 10,
@@ -41,6 +39,7 @@ const styles = StyleSheet.create({
     fontSize : '30',
     fontWeight : 'bold',
     padding: 20,
+    textAlign: "center",
   },
   primaryText: {
     marginBottom: 8,
