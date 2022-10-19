@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
   StyleSheet,
   Text,
@@ -6,6 +6,7 @@ import {
   Image,
 } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
+import { Rating } from 'react-native-rating-element';
 
 
 export default function FilmDetailsScreen({navigation, route}) {
@@ -22,10 +23,23 @@ export default function FilmDetailsScreen({navigation, route}) {
           <Text>MetaScore: {item.Metascore}</Text>
           <Text>Imdb Votes: {item.imdbVotes}</Text>
           <Image style={styles.image} source={{uri: item.Images[0]}} />
+          
+          <Rating
+            rated={3.7}
+            totalCount={5}
+            ratingColor="#f1c644"
+            ratingBackgroundColor="#d4d4d4"
+            size={24}
+            icon="ios-star"
+            direction="row" // anyOf["row" (default), "row-reverse", "column", "column-reverse"]
+          />
         </ScrollView>
       </View>
     )
 }
+
+
+
 
 const styles = StyleSheet.create({
   container: {
